@@ -17,6 +17,22 @@ class Point {
   }
 }
 
+function loop(func) {
+  let t1;
+  function iteration(t2) {
+    if (t1 === undefined) {
+      t1 = t2;
+      requestAnimationFrame(iteration);
+      return;
+    }
+    const dt = t2 - t1;
+    t1 = t2;
+    func(dt);
+    requestAnimationFrame(iteration);
+  }
+  requestAnimationFrame(iteration);
+}
+
 function mouse() {
   let p = new Point(0, 0);
 
@@ -56,10 +72,9 @@ function follower(thing) {
     return val;
   }
 
-  const dt = (1 / 60) * 1000;
   let p = new Point(Math.random() * 500, Math.random() * 500);
 
-  setInterval(function () {
+  loop(function (dt) {
     const maxSpeed = 1000;
     const a = (maxSpeed - 5) / (100 - 20);
     const b = 5 - 20 * a;
@@ -75,7 +90,7 @@ function follower(thing) {
       left: p.x + "px",
       top: p.y + "px",
     });
-  }, dt);
+  });
 
   return {
     pos() {
