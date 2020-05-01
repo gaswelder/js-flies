@@ -55,6 +55,12 @@ for (let i = 0; i < 50; i++) {
   thing = follower(thing);
 }
 
+function randomColor() {
+  const val = () => 50 + Math.round(Math.random() * 100);
+  const fmt = (num) => num.toString(16).padStart(2, "0").toUpperCase();
+  return "#" + [val(), val(), val()].map(fmt).join("");
+}
+
 function follower(thing) {
   const me = document.createElement("div");
   document.body.appendChild(me);
@@ -63,7 +69,7 @@ function follower(thing) {
     width: "10px",
     height: "10px",
     borderRadius: "50%",
-    backgroundColor: "black",
+    backgroundColor: randomColor(),
   });
 
   function clamp(val, min, max) {
